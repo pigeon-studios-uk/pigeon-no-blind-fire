@@ -7,7 +7,9 @@
 
 local IDLE_MS = 250                  -- how often to check for cover when not in it
 
-local strings = Locales[Config.Locale] or Locales.en
+-- 'auto' follows ox_lib's language (the ox:locale convar), and English when that isn't set.
+local locale = Config.Locale == 'auto' and GetConvar('ox:locale', 'en') or Config.Locale
+local strings = Locales[locale] or Locales.en
 local lastMessage = -math.huge
 
 local function notify(text)

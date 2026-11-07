@@ -57,7 +57,7 @@ With this resource, a player in cover has to aim out of it first, showing themse
 - **No delay.** It's checked every frame while a player is in cover, so letting go of aim blocks shooting straight away.
 - **Tells players why.** A short message says to aim first, at most once every few seconds. Uses ox_lib notifications if you have it, otherwise GTA's own.
 - **Configurable.** Choose which controls are blocked, and whether players get a message.
-- **Translatable.** The message is in `locales/`.
+- **23 languages.** The message is in `locales/`, and it follows ox_lib's language setting.
 - **Standalone.** No framework or other resources needed.
 
 ## What players see
@@ -111,7 +111,7 @@ All settings are in `configuration/config.lua`, each explained by a comment next
 
 | Setting | Default | What it does |
 |---|---|---|
-| `Config.Locale` | `'en'` | Language file from `locales/` |
+| `Config.Locale` | `'auto'` | Language: `'auto'` follows ox_lib's language, or a code from `locales/` such as `'de'` |
 | `Config.BlockedControls` | `{ 24, 257, 142 }` | GTA controls blocked in cover without aiming: attack, the second attack input, and the melee attack on the same button. The full list is in the [FiveM controls reference](https://docs.fivem.net/docs/game-references/controls/) |
 | `Config.ShowMessage` | `true` | Tell players to aim first when they try to shoot |
 | `Config.MessageCooldown` | `4` | Seconds between messages |
@@ -119,7 +119,19 @@ All settings are in `configuration/config.lua`, each explained by a comment next
 
 ## Localisation
 
-Set `Config.Locale` to a file in `locales/`. To add a language, copy `locales/en.lua` to a new file named with the language's two-letter code (such as `de.lua`), change `Locales.en` at the top to match (`Locales.de`), and translate the text in quotes. We'd love it if you shared it back; see [Contributing](#contributing).
+Pigeon No Blind Fire comes in 23 languages: `en` English, `cs` Czech, `da` Danish, `de` German, `es` Spanish, `et` Estonian, `fi` Finnish, `fr` French, `hr` Croatian, `hu` Hungarian, `id` Indonesian, `it` Italian, `nl` Dutch, `no` Norwegian, `pl` Polish, `pt` Portuguese, `pt-br` Brazilian Portuguese, `ro` Romanian, `sl` Slovenian, `sv` Swedish, `tr` Turkish, `zh-cn` Simplified Chinese and `zh-tw` Traditional Chinese. They're the languages ox_lib ships, so your server may already have one set.
+
+With `Config.Locale = 'auto'` (the default), it uses ox_lib's language, so one line in `server.cfg` sets it for this and every other resource that follows ox_lib:
+
+```cfg
+setr ox:locale "de"
+```
+
+Use `setr`, not `set`, so players' games get it too. Without it, or for a language that isn't in `locales/`, the text is English. To choose a language for this resource only, set `Config.Locale` to its code, such as `'fr'` or `'pt-br'`.
+
+Chinese text can show as blank in GTA's own text, such as its notifications and help messages, because GTA only loads its Chinese font when the game itself is set to Chinese. ox_lib's notifications show every language.
+
+Every file was checked for missing text and placeholders, but not every translation has been read by a native speaker yet. If something reads wrong, please send a fix; see [Contributing](#contributing). To add a language, copy `locales/en.lua` to a new file named with the language's code (such as `ja.lua`), change `Locales.en` at the top to match (`Locales.ja`), and translate the text in quotes.
 
 ## How it works
 
